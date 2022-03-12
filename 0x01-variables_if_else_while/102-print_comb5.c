@@ -8,44 +8,42 @@
  */
 int main(void)
 {
-int c;
-int d;
-int e;
-int f = 0;
+	int c = 0;
+	int f_d;
+	int l_d;
 
-while (f < 10)
-{
-	e = 0;
-	while (e < 10)
+	int c2;
+	int f_d2;
+	int l_d2;
+
+	while (c <= 98)
 	{
-		d = 0;
-		while (d < 10)
+		f_d = (c / 10 + '0');
+		l_d = (c % 10 + '0');
+		c2 = 0;
+		while (c2 <= 99)
 		{
-			c = 0;
-			while (c < 10)
-			{
-				if (!(f == c && e == d))
-				{
-					putchar('0' + f);
-					putchar('0' + e);
-					putchar(' ');
-					putchar('0' + d);
-					putchar('0' + c);
-					if (!(f + e == 18 && c + d == 17 && d == 9))
-					{
-						putchar(',');
-						putchar(' ');
-					}
-				}
-				c++;
-			}
-			d++;
-		}
-		e++;
-	}
-	f++;
-}
-putchar('\n');
-return (0);
-}
+			f_d2 = (c2 / 10 + '0');
+			l_d2 = (c2 % 10 + '0');
 
+			if (c < c2)
+			{
+				putchar(f_d);
+				putchar(l_d);
+				putchar(' ');
+				putchar(f_d2);
+				putchar(l_d2);
+
+				if (c != 98)
+				{
+					putchar(',');
+					putchar(' ');
+				}
+			}
+			c2++;
+		}
+		c++;
+	}
+	putchar('\n');
+	return (0);
+}
