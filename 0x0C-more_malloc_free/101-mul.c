@@ -1,127 +1,151 @@
 #include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
-#include <ctype.h>
 
 /**
- * _is_zero - determines if any number is zero
- * @argv: argument vector.
- *
- * Return: no return.
- */
-void _is_zero(char *argv[])
+ * _atoi_digit - convert a char to integer.
+ * @x: character to convert.
+ * Return: integer.
+ **/
+
+int _atoi_digit(char x)
 {
-	int i, isn1 = 1, isn2 = 1;
+	unsigned int res;
 
-	for (i = 0; argv[1][i]; i++)
-		if (argv[1][i] != '0')
-		{
-			isn1 = 0;
-			break;
-		}
-
-	for (i = 0; argv[2][i]; i++)
-		if (argv[2][i] != '0')
-		{
-			isn2 = 0;
-			break;
-		}
-
-	if (isn1 == 1 || isn2 == 1)
-	{
-		printf("0\n");
-		exit(0);
-	}
+	if (x <= '9' && x >= '0')
+		res = x - '0';
+	return (res);
 }
 
 /**
- * _initialize_array - set memery to zero in a new array
- * @ar: char array.
- * @lar: length of the char array.
- *
- * Return: pointer of a char array.
- */
-char *_initialize_array(char *ar, int lar)
+ * _isNumber - Define if a string is a number.
+ * @argv: Pointer to string.
+ * Return: success (0).
+ **/
+int _isNumber(char *argv)
 {
-	int i = 0;
+	int i;
 
-	for (i = 0; i < lar; i++)
-		ar[i] = '0';
-	ar[lar] = '\0';
-	return (ar);
-}
-
-/**
- * _checknum - determines length of the number
- * and checks if number is in base 10.
- * @argv: arguments vector.
- * @n: row of the array.
- *
- * Return: length of the number.
- */
-int _checknum(char *argv[], int n)
-{
-	int ln;
-
-	for (ln = 0; argv[n][ln]; ln++)
-		if (!isdigit(argv[n][ln]))
-		{
-			printf("Error\n");
-			exit(98);
-		}
-
-	return (ln);
-}
-
-/**
- * main - Entry point.
- * program that multiplies two positive numbers.
- * @argc: number of arguments.
- * @argv: arguments vector.
- *
- * Return: 0 - success.
- */
-int main(int argc, char *argv[])
-{
-	int ln1, ln2, lnout, add, addl, i, j, k, ca;
-	char *nout;
-
-	if (argc != 3)
-		printf("Error\n"), exit(98);
-	ln1 = _checknum(argv, 1), ln2 = _checknum(argv, 2);
-	_is_zero(argv), lnout = ln1 + ln2, nout = malloc(lnout + 1);
-	if (nout == NULL)
-		printf("Error\n"), exit(98);
-	nout = _initialize_array(nout, lnout);
-	k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
-	for (; k >= 0; k--, i--)
-	{
-		if (i < 0)
-		{
-			if (addl > 0)
-			{
-				add = (nout[k] - '0') + addl;
-				if (add > 9)
-					nout[k - 1] = (add / 10) + '0';
-				nout[k] = (add % 10) + '0';
-			}
-			i = ln1 - 1, j--, addl = 0, ca++, k = lnout - (1 + ca);
-		}
-		if (j < 0)
-		{
-			if (nout[0] != '0')
-				break;
-			lnout--;
-			free(nout), nout = malloc(lnout + 1), nout = _initialize_array(nout, lnout);
-			k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
-		}
-		if (j >= 0)
-		{
-			add = ((argv[1][i] - '0') * (argv[2][j] - '0')) + (nout[k] - '0') + addl;
-			addl = add / 10, nout[k] = (add % 10) + '0';
-		}
-	}
-	printf("%s\n", nout);
+	for (i = 0; argv[i]; i++)
+		if (argv[i] < 48 || argv[i] > 57)
+			return (1);
 	return (0);
 }
 
+/**
+ *_calloc - allocate array of size * nmemb.
+ * @nmemb: number of elements.
+ * @size: size of element.
+ * Return: pointer to array.
+ **/
+
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	char *tab;
+	unsigned int i;
+
+	tab = malloc(size * nmemb);
+
+	if (tab == NULL)
+		return (NULL);
+
+	for (i = 0; i < (size * nmemb); i++)
+		tab[i] = '0';
+
+	return (tab);
+}
+
+/**
+ * mul_array - multiply two arrays.
+ * @a1: first array.
+ * @len1: length of array a1.
+ * @a2:  char.
+ * @a3: array for result.
+ * @lena: length of array a3.
+ * Return: pointer to array.
+ **/
+
+void *mul_array(char *a1, int len1, char a2, char *a3, int lena)
+{
+	int mul = 0, i, k;
+
+	k = lena;
+	for (i = len1 - 1; i >= 0 ; i--)
+	{
+		mul += (a1[i] - '0') * (a2 - '0') + (a3[k] - '0');
+		a3[k] = (mul % 10) + '0';
+		mul /= 10;
+		k--;
+	}
+
+		while (mul != 0)
+		{
+			mul += a3[k] - '0';
+			a3[k] = (mul % 10) + '0';
+			mul /= 10;
+			k--;
+		}
+
+	return (a3);
+}
+/**
+ * print_array - print all digits of array.
+ * @nb: number of elements to print.
+ * @a: array of elements.
+ **/
+void print_array(char *a, int nb)
+{
+	int i = 0;
+
+	while (a[i] == '0' && (i + 1) < nb)
+	{
+		i++;
+	}
+	for (; i < nb; i++)
+	{
+		_putchar(a[i]);
+	}
+	_putchar('\n');
+}
+
+/**
+ *main - print the multiplication of 2 numbers.
+ *@argc: array length.
+ *@argv: array.
+ *Return: 0.
+ */
+
+int main(int argc, char *argv[])
+{
+	int i, c, len1, len2, lenres;
+	char E[6] = {'E', 'r', 'r', 'o', 'r', '\n'};
+	char *tabres;
+
+	if (argc != 3 || _isNumber(argv[1]) == 1 || _isNumber(argv[2]) == 1)
+	{
+		for (i = 0; i < 6; i++)
+		{
+			_putchar(E[i]);
+		}
+		exit(98);
+	}
+	for (len1 = 0; argv[1][len1]; len1++)
+	;
+	for (len2 = 0; argv[2][len2]; len2++)
+	;
+	lenres = len1 + len2;
+	tabres = _calloc(lenres, sizeof(int));
+	if (tabres == NULL)
+	{
+		free(tabres);
+		return (0);
+	}
+	for (i = len2 - 1, c = 0; i >= 0; i--)
+	{
+	tabres = mul_array(argv[1], len1, argv[2][i], tabres, (lenres - 1 - c));
+	c++;
+	}
+	print_array(tabres, lenres);
+	free(tabres);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
