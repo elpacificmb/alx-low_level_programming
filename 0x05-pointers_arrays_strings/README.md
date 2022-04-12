@@ -1,1 +1,0 @@
-# Pointers and Arrays Strings
