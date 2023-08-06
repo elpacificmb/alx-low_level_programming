@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "holberton.h"
+#include "main.h"
 #include <math.h>
 /**
  * clear_bit - Function that clear the value of a bit to 1 at a given index.
