@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "holberton.h"
+#include "main.h"
 
 /**
  * get_endianness - Write a function that checks the endianness.
