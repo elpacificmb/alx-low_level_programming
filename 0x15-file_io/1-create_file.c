@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "holberton.h"
+#include "main.h"
 /**
  * create_file - function will create a file
  * @filename:  name of file to be created
+ * see the function below
  * @text_content: text to be written in new file
  * Return: function will return 1 on success, -1 on fail
  */

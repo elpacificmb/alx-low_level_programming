@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "holberton.h"
+#include "main.h"
 /**
  * read_textfile - function reads a text file and prints it to standard output
  * @filename: file
  * @letters: number of letters to read and print
  *
+ *
+ * see the function below
  * Return: number of letters read and printed, 0 if fail
  */
 ssize_t read_textfile(const char *filename, size_t letters)
